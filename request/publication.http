@@ -1,0 +1,32 @@
+@api = http://localhost:4000/publicaciones
+
+### trer todas las publicaciones
+GET  {{api}}
+
+### Traer una publicacion por su id
+GET {{api}}/1
+
+### Traer una publicacion por su fkUser
+GET {{api}}/getPublicationsByUserId/4
+
+
+### crear publicacion
+POST {{api}}
+Content-Type: application/json
+
+{
+        "image":"https://i.imgur.com/MwdPaFZ_d.webp?maxwidth=520&shape=thumb&fidelity=high",
+        "name": "nombre1",
+        "description":"meme",
+        "likes": 7,
+        "dislikes": 9,
+        "fkUser": 9
+}
+### borrar una publicacion por su id0
+DELETE {{api}}/5
+
+### borrar una publiacion por el fkUser
+
+DELETE {{api}}/getPublicationsByUserId/4
+
+### actualizar una publicacion (no se si tiene sentido)
