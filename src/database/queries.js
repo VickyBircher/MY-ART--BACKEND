@@ -34,4 +34,5 @@ export const queries = {
     updateLikeOrDislike: `UPDATE LikeOrDislike SET stateLike = @stateLike, stateDislike = @stateDislike
                 WHERE fkUser = @fkUser AND fkPublication = @fkPublication`,
     deleteLikeOrDislike: `DELETE FROM LikeOrDislike WHERE fkUser = @fkUser AND fkPublication = @fkPublication`,
+    login: `SELECT username, password FROM [User] WHERE username = @pUsername AND password = @pPassword`,
 }

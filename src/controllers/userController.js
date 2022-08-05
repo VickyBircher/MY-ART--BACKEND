@@ -16,7 +16,7 @@ export const getUsers = async(req, res) => {
 
 };
 
-//Crear un usuario
+//Crear un usuario (register)
 export const createUser = async(req, res) => {
     const {
         name,
@@ -175,6 +175,30 @@ export const updateUser = async(req, res) => {
     } catch (error) {
         res.status(500);
         res.send(error.msg('Error en el servidor'));
+    }
+
+}
+
+//login
+
+export const login = async(username, password, res) => {
+
+    let user = null
+
+    try {
+
+        const pool = await getConnection();
+        const result = await pool
+        .request()
+        .input("pUsername", sql.VarChar(50), username)
+        .input("pPassword", sql.VarChar(50), password)
+        .query(queries.login);
+        user = result.recordsets[0][0]
+        return user
+
+    } catch (error) {
+        res.status(500);
+        console.log(error)
     }
 
 }
