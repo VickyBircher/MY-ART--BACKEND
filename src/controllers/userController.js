@@ -193,7 +193,14 @@ export const login = async(username, password, res) => {
         .input("pUsername", sql.VarChar(50), username)
         .input("pPassword", sql.VarChar(50), password)
         .query(queries.login);
-        user = result.recordsets[0][0]
+        if(result.recordsets[0].length > 0){
+            console.log('estoy en el if')
+            user = result.recordsets[0][0].username
+        }
+        else{
+            console.log('estoy en el else')
+            user = null;
+        }
         return user
 
     } catch (error) {

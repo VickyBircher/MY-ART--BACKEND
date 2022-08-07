@@ -4,7 +4,9 @@ import userRoutes from './routes/userRoutes'
 import publicationRoutes from './routes/publicationRoutes'
 import commentRoutes from './routes/commentsRoutes'
 import likeOrDislikeRoutes from './routes/likeOrDislikeRoutes'
-
+import 'dotenv/config.js'
+import jwt from 'jsonwebtoken'
+ 
 const app = express();
 
 app.set('port', config.port);
@@ -22,9 +24,32 @@ app.use(function(req, res, next) {
   }
 );
 
+const verifyToken =(req,res,next)=>{
+  const token = req.headers['authorization'];
+  let tokenSolo = null;
+  if(typeof token !== 'undefined'){
+    const tokenArray = token.split(' ');
+    tokenSolo = tokenArray[1];
+  } 
+  else{
+    res.sendStatus(403)
+  }
+
+  jwt.verify(tokenSolo, process.env.SECRETKEY, (err) => {
+    if(err){
+      console.log('paso 4: ',tokenSolo);
+      res.status(403).json(err);
+    }
+    else{
+      console.log(tokenSolo);
+      next();
+    }
+  });
+}
+
 app.use(userRoutes);
-app.use(publicationRoutes);
-app.use(commentRoutes);
-app.use(likeOrDislikeRoutes);
+app.use(verifyToken, publicationRoutes);
+app.use(verifyToken, commentRoutes);
+app.use(verifyToken, likeOrDislikeRoutes);
 
 export default app
