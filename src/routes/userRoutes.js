@@ -15,6 +15,7 @@ router.post('/usuarios/login', async(req,res) =>{
 
         const {username, password} = req.body
         const logedUser = await login(username,password)
+        console.log('usuario: ',logedUser)
 
         if (logedUser == null) return res.send('Usuario o contraseña incorrectos');
 
